@@ -63,7 +63,10 @@ public class DemoEpmIntegrationApplication implements CommandLineRunner {
             RemoteEnvironment re = epmService.provisionRemoteEnvironment();
             dockerService = new DockerService(re);
             dc = dockerService.getDockerClient();
+            String imageName = "hello-world:latest";
+            dockerService.runDockerContainer(imageName);
             // Clean test environment
+            //epmService.deprovisionRemoteEnvironment(re);
 //            epmService.deleteWorker(re.getWorker().getId());
 //            epmService.deleteKey(re.getKey().getId());
 //            epmService.deleteAdapter(resourceGroup.getId());

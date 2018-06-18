@@ -69,10 +69,12 @@ public class EPMService {
             //Providing VM
             createPackage(ROOT_PATH + TARGET_DIRECTORY + TAR_SUFFIX, new File(clazz.getResource(PACKAGES_PATH).getFile()));
             resourceGroup = registerAdapter(ROOT_PATH + TARGET_DIRECTORY + TAR_SUFFIX);
+            re.setResourceGroup(resourceGroup);
             logger.debug("Virtual machine provided with id: {}", resourceGroup.getId());
             //Registering privated key
             Key key = addKey(new File(clazz.getResource(WORKERS_PATH + WORKER_KEY_JSON).getFile()));
             logger.debug("Key {} value: {}", key.getName(), key.getKey());
+            re.setKey(key);
             //logger.debug("key id: {}", key.getId());
             int currentAttempts = 0;
             boolean registeredWorker = false;
@@ -89,6 +91,8 @@ public class EPMService {
             if (!registeredWorker) {
                 throw new ServiceException("Error provioning a new remote environment", ExceptionCode.ERROR_PROVISIONING_VM);
             }
+            re.setWorker(worker);
+            re.setHostIp(worker.getIp());
             //TimeUnit.SECONDS.sleep(45);
             //worker = registerWorker(resourceGroup);
             logger.info("Worker id: {}", worker.getId());
